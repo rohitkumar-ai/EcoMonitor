@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Monitoring - Suggestion Form</title>
+    <style>
+        /* Form Container Styles */
+        .form-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: linear-gradient(145deg, #f5f7fa, #e4e8eb);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-header h2 {
+            color: #2e7d32;
+            font-size: 28px;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .form-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #ff8f00;
+        }
+        
+        .form-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        /* Form Styles */
+        .suggestion-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            font-size: 15px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #81c784;
+            box-shadow: 0 0 0 3px rgba(129, 199, 132, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            grid-column: span 2;
+            justify-self: center;
+            width: 200px;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4);
+            background: linear-gradient(to right, #4caf50, #2e7d32);
+        }
+        
+        .submit-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Status Message */
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+            grid-column: span 2;
+        }
+        
+        .status-success {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: #2e7d32;
+            border: 1px solid #81c784;
+            display: block;
+        }
+        
+        .status-error {
+            background-color: rgba(211, 47, 47, 0.1);
+            color: #d32f2f;
+            border: 1px solid #e57373;
+            display: block;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .suggestion-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .submit-btn {
+                grid-column: span 1;
+                width: 100%;
+            }
+        }
+        
+        /* Loading Animation */
+        .loader {
+            display: none;
+            width: 25px;
+            height: 25px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Environmental Suggestion Form</h2>
+            <p>Share your ideas to help improve our planet's monitoring systems</p>
+        </div>
+        
+        <form id="suggestionForm" class="suggestion-form">
+            <div class="form-group">
+                <label for="name">Your Name *</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="subject">Subject *</label>
+                <input type="text" id="subject" class="form-control" required>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="category">Category *</label>
+                <select id="category" class="form-control" required>
+                    <option value="">Select a category</option>
+                    <option value="air-quality">Air Quality Monitoring</option>
+                    <option value="water-quality">Water Quality</option>
+                    <option value="biodiversity">Biodiversity</option>
+                    <option value="climate">Climate Change</option>
+                    <option value="technology">Technology Improvement</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="message">Your Suggestion *</label>
+                <textarea id="message" class="form-control" required></textarea>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="priority">Priority Level</label>
+                <div class="priority-levels">
+                    <div class="priority-option">
+                        <input type="radio" id="low" name="priority" value="low" checked>
+                        <label for="low">Low</label>
+                    </div>
+                    <div class="priority-option">
+                        <input type="radio" id="medium" name="priority" value="medium">
+                        <label for="medium">Medium</label>
+                    </div>
+                    <div class="priority-option">
+                        <input type="radio" id="high" name="priority" value="high">
+                        <label for="high">High</label>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span id="btnText">Submit Suggestion</span>
+                <div class="loader" id="loader"></div>
+            </button>
+            
+            <div class="status-message" id="statusMessage"></div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('suggestionForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const loader = document.getElementById('loader');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            // EmailJS configuration (replace with your actual credentials)
+            emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                btnText.style.display = 'none';
+                loader.style.display = 'block';
+                
+                // Prepare email parameters
+                const templateParams = {
+                    from_name: document.getElementById('name').value,
+                    from_email: document.getElementById('email').value,
+                    subject: document.getElementById('subject').value,
+                    category: document.getElementById('category').value,
+                    message: document.getElementById('message').value,
+                    priority: document.querySelector('input[name="priority"]:checked').value
+                };
+                
+                // Send email using EmailJS
+                emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        
+                        // Show success message
+                        statusMessage.textContent = 'Thank you! Your suggestion has been submitted successfully.';
+                        statusMessage.className = 'status-message status-success';
+                        
+                        // Reset form
+                        form.reset();
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                        
+                        // Show error message
+                        statusMessage.textContent = 'There was an error submitting your suggestion. Please try again later.';
+                        statusMessage.className = 'status-message status-error';
+                    })
+                    .finally(function() {
+                        // Reset button state
+                        submitBtn.disabled = false;
+                        btnText.style.display = 'inline';
+                        loader.style.display = 'none';
+                    });
+            });
+            
+            function validateForm() {
+                let isValid = true;
+                const inputs = form.querySelectorAll('[required]');
+                
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        input.style.borderColor = '#d32f2f';
+                        isValid = false;
+                        
+                        // Add event to remove error styling when user starts typing
+                        input.addEventListener('input', function() {
+                            if (this.value.trim()) {
+                                this.style.borderColor = '#ddd';
+                            }
+                        });
+                    }
+                });
+                
+                // Validate email format
+                const email = document.getElementById('email');
+                if (email.value && !validateEmail(email.value)) {
+                    email.style.borderColor = '#d32f2f';
+                    isValid = false;
+                    
+                    email.addEventListener('input', function() {
+                        if (validateEmail(this.value)) {
+                            this.style.borderColor = '#ddd';
+                        }
+                    });
+                }
+                
+                return isValid;
+            }
+            
+            function validateEmail(email) {
+                const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return re.test(String(email).toLowerCase());
+            }
+        });
+    </script>
+    
+    <!-- Load EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</body>
+</html>
